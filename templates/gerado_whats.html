@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Link WhatsApp Gerado{% endblock %}
+
+{% block content %}
+    <form method="POST" action="/submit">
+        <label for="name">DDD:</label>
+        <input type="number" id="ddd" name="ddd">
+        <label for="name">Telefone</label>
+        <input type="number" id="telefone" name="telefone">
+        <label for="name">Mensagem</label>
+        <input type="text" id="mensagem" name="mensagem">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        
+        <button type="submit">Enviar</button>
+      </form>
+      
+
+{% endblock %}

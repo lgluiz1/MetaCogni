@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Link WhatsApp Gerado{% endblock %}
+
+{% block content %}
+
+    <h1>Seu link do WhatsApp foi gerado!</h1>
+    <p>Clique no link abaixo para abrir o WhatsApp:</p>
+    <a href="{{ link_whatsapp }}" target="_blank">{{ link_whatsapp }}</a>
+    <a href="/"> Gera Novo Link</a>
+
+{% endblock %}

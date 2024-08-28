@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css_static/styler.css">
+    <link rel="stylesheet" href="../static/pages/styler.css">
+    <link rel="stylesheet" href="../static/responsive/styler.css">
+    <title>{% block title %}Título Padrão{% endblock %}</title>
+    <!-- Outras tags do head comuns -->
+</head>
+<body>
+    <!-- Cabeçalho ou menu de navegação -->
+    <header>
+        <h1>Cabeçalho Comum</h1>
+        <!-- Outros elementos do cabeçalho -->
+    </header>
+
+    <!-- Conteúdo específico da página -->
+    <main>
+        {% block content %}
+        Conteúdo padrão.
+        {% endblock %}
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>Rodapé Comum</p>
+        <!-- Outros elementos do rodapé -->
+    </footer>
+</body>
+</html>
