@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Link WhatsApp Gerado{% endblock %}
+
+{% block content %}
+<div id="chatbox" style="border: 1px solid black; width: 300px; height: 400px; overflow-y: scroll;"></div>
+    <input type="text" id="userMessage">
+    <button onclick="sendMessage()">Enviar</button>
+
+<script src="static/chat.js"></script>
+{% endblock %}

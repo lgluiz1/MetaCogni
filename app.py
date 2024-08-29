@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 import json
 
 app = Flask(__name__)
-
+empresa = 'Metacogni'
 # Carrega o contador do arquivo JSON
 def load_contador():
     try:
@@ -17,8 +17,8 @@ contador = load_contador()
 def index():
     global contador
     contador = load_contador()
-    contador_valor = f'A MetaCogni ja gerou mais de {contador} links'
-    return render_template('gerado_whats.html' , contador_valor=contador_valor)
+    contador_valor = f'A {empresa} ja gerou mais de {contador} links'
+    return render_template('gerado_whats.html' , contador_valor=contador_valor , empresa=empresa)
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -44,13 +44,22 @@ def submit():
         json.dump(contador, f)
     
     # Renderiza a página com o link gerado
-    return render_template('gerado_whats_gerado.html', link_whatsapp=link_whatsapp )
+    return render_template('gerado_whats_gerado.html', link_whatsapp=link_whatsapp , empresa=empresa)
 
 @app.route('/sobre')
 def sobre():
-    return render_template('sobre.html')
+    return render_template('sobre.html' , empresa=empresa)
 
 @app.route('/inovacao')
 def inovacao():
-    return render_template('inovacao.html')
+    return render_template('inovacao.html' , empresa=empresa)
 
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.form['message']
+    response_message = "Estou aqui para ajudar!"
+    return {'response': response_message}
+
+@app.route('/mensagem')
+def mensagem():
+    return render_template('chat.html' , empresa=empresa)
