@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 import json
 
 app = Flask(__name__)
-empresa = 'Metacogni'
+empresa = 'MetaCogni'
 # Carrega o contador do arquivo JSON
 def load_contador():
     try:
