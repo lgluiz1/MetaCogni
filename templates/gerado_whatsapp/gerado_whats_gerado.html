@@ -3,19 +3,48 @@
 {% block title %}Link WhatsApp Gerado{% endblock %}
 
 {% block content %}
-    <div class="link_sucesso">
+<div class="link_sucesso">
     <h1>Seu link do WhatsApp foi gerado!</h1>
     <p>Clique no link abaixo para abrir o WhatsApp:</p>
     <div class="link_whatsapp">
-    <a href="{{ link_whatsapp }}" target="_blank">{{ link_whatsapp }}</a>
-  </div>
-  <div class="copiar_link">
-    <a class="button_copiar-link" href=""> <span class="material-symbols-outlined">
-      content_copy
-      </span>Copiar Link</a>
-    <a class="button_gera_novo" href="/"><span class="material-symbols-outlined">
-      restart_alt
-      </span>  Gera Novo Link</a>
-  </div>
-  </div>
+        <a href="{{ link_whatsapp }}" target="_blank">{{ link_whatsapp }}</a>
+    </div>
+    <div class="copiar_link">
+        <a class="button_copiar-link" href="#" onclick="copiarLink()"> 
+            <span class="material-symbols-outlined">content_copy</span>Copiar Link
+        </a>
+        <a class="button_gera_novo" href="/">
+            <span class="material-symbols-outlined">restart_alt</span> Gera Novo Link
+        </a>
+    </div>
+</div>
+
+<script>
+// Função para copiar o link do WhatsApp para a área de transferência
+function copiarLink() {
+    // Seleciona o link do WhatsApp
+    const link = document.querySelector('.link_whatsapp a').href;
+    
+    // Cria um campo de texto temporário para armazenar o link
+    const tempInput = document.createElement('input');
+    tempInput.value = link; // Define o valor do campo temporário como o link
+    document.body.appendChild(tempInput); // Adiciona o campo temporário ao corpo do documento
+    
+    // Seleciona o conteúdo do campo de texto e copia para a área de transferência
+    tempInput.select();
+    document.execCommand('copy');
+    
+    // Remove o campo de texto temporário após a cópia
+    document.body.removeChild(tempInput);
+    
+    // Alerta o usuário de que o link foi copiado
+    alert("Link copiado para a área de transferência!");
+}
+  
+// Adiciona um evento ao botão de copiar para que, ao clicar, o link seja copiado
+document.querySelector('.button_copiar-link').addEventListener('click', function(event) {
+    event.preventDefault();  // Previne o comportamento padrão do link, que é recarregar a página
+    copiarLink();  // Chama a função de copiar o link
+});
+</script>
 {% endblock %}
