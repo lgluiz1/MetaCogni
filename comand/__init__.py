@@ -1,6 +1,5 @@
 nome_do_site = "MetaCogni"
 from pytube import YouTube
-import os
 
 # youtube_downloader.py
 

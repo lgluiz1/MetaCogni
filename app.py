@@ -1,7 +1,5 @@
 from flask import Flask, request, render_template , send_file
 import json
-import requests
-import os
 from comand import YouTubeDownloader ,nome_do_site
 
 app = Flask(__name__)
