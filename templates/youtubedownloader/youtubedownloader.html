@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Link WhatsApp Gerado{% endblock %}
+
+{% block content %}
+<h1>Download Video</h1>
+    <form action="/ytdownload" method="post">
+        <label for="video_url">Enter YouTube Video URL:</label>
+        <input type="text" id="video_url" name="video_url" required>
+        <button type="submit">Get Download Link</button>
+        
+{% endblock %}

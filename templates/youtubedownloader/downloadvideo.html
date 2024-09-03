@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Link WhatsApp Gerado{% endblock %}
+
+{% block content %}
+<h1>Download Video</h1>
+    <p>Click the link below to download the video directly:</p>
+    <a href="{{ download_url }}" download>Download Video</a>
+    <a href="{{ download_url }}" download="video.mp4">Clique aqui para baixar o vídeo</a>
+{% endblock %}

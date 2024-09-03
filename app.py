@@ -1,8 +1,11 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template , send_file
 import json
+import requests
+import os
+from comand import YouTubeDownloader ,nome_do_site
 
 app = Flask(__name__)
-empresa = 'MetaCogni'
+empresa = nome_do_site
 # Carrega o contador do arquivo JSON
 def load_contador():
     try:
@@ -45,6 +48,21 @@ def submit():
     
     # Renderiza a página com o link gerado
     return render_template('./gerado_whatsapp/gerado_whats_gerado.html', link_whatsapp=link_whatsapp , empresa=empresa)
+
+
+## YoutubeDownloader
+@app.route('/ytdownload', methods=['GET', 'POST'])
+def download_video():
+    if request.method == 'POST':
+        video_url = request.form.get('video_url', '')
+        try:
+            # Baixa o vídeo no servidor
+            filepath = YouTubeDownloader.download_video(video_url)
+            # Envia o vídeo baixado ao cliente            return send_file(filepath, as_attachment=True)
+        except Exception as e:
+            print(f"Erro ao baixar o vídeo: {e}")
+            return render_template('./youtubedownloader/downloadvideo.html', error="Não foi possível baixar o vídeo.")
+    return render_template('./youtubedownloader/youtubedownloader.html')
 
 @app.route('/sobre')
 def sobre():
