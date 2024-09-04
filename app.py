@@ -1,9 +1,13 @@
-from flask import Flask, request, render_template , send_file
+from flask import Flask, request, render_template , send_file 
+from markupsafe import Markup  # Importando Markup da biblioteca correta
 import json
-from comand import YouTubeDownloader ,nome_do_site
+from comand import YouTubeDownloader , gerado_whatsapp
+from static.termos.__init__ import termos_politica_html
+
 
 app = Flask(__name__)
-empresa = nome_do_site
+textos = gerado_whatsapp().get_textos()
+empresa = textos['nomeSite']
 # Carrega o contador do arquivo JSON
 def load_contador():
     try:
@@ -19,7 +23,7 @@ def index():
     global contador
     contador = load_contador()
     contador_valor = f'A {empresa} ja gerou mais de {contador} links'
-    return render_template('./gerado_whatsapp/gerado_whats.html' , contador_valor=contador_valor , empresa=empresa)
+    return render_template('./gerado_whatsapp/gerado_whats.html' , contador_valor=contador_valor , empresa=empresa , **textos)
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -64,7 +68,7 @@ def download_video():
 
 @app.route('/sobre')
 def sobre():
-    return render_template('sobre.html' , empresa=empresa)
+    return render_template('sobre.html' , empresa=empresa, **textos)
 
 @app.route('/inovacao')
 def inovacao():
@@ -79,3 +83,9 @@ def chat():
 @app.route('/mensagem')
 def mensagem():
     return render_template('chat.html' , empresa=empresa)
+
+@app.route('/termos')
+def termos():
+    termos_politica_html_markup = Markup(termos_politica_html)  # Marcar como HTML seguro
+
+    return render_template('termos.html', empresa=empresa, termos_politica_html=termos_politica_html_markup)

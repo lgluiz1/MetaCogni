@@ -16,7 +16,7 @@
 <body>
     <!-- Cabeçalho ou menu de navegação -->
     <header>
-        <div><img src="../static/img/metacogni_logo.svg" alt="metacogni_logo"></div>
+        <div><img src="../static/img/metaInnovate_logo.svg" alt="metacogni_logo"></div>
         <ul>
             <li>
                 <a href="/">Gerado Link WhatsApp</a>
@@ -37,7 +37,19 @@
         </label>
         <!-- Outros elementos do cabeçalho -->
     </header>
-
+    <div class="menu">
+      <ul>
+        <li>
+            <a href="/">Gerado Link WhatsApp</a>
+        </li>
+        <li>
+            <a href="/inovacao">Inovação</a>
+        </li>
+        <li>
+            <a href="/sobre">Sobre</a>
+        </li>
+    </ul>
+    </div>
     <!-- Conteúdo específico da página -->
     <main>
         {% block content %}
@@ -47,6 +59,22 @@
 
     <!-- Rodapé -->
     <footer>
+      <div class="menu_footer">
+        <ul>
+          <li>
+            <a href="/">Gerado Link WhatsApp</a>
+          </li>
+          <li>
+            <a href="/inovacao">Inovação</a>
+          </li>
+          <li>
+            <a href="/sobre">Sobre</a>
+          </li>
+          <li>
+            <a href="/termos">Termos de Uso"></a>
+          </li>
+        </ul>
+      </div>
         <p>Rodapé Comum</p>
 <div class="social-login-icons">
   <div class="socialcontainer">
@@ -151,9 +179,6 @@
 
         <!-- Outros elementos do rodapé -->
     </footer>
-    <script>
-     
-
-    </script>
+    <script src="../static/menu.js"></script>
 </body>
 </html>

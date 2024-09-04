@@ -46,8 +46,41 @@ header ul{
     gap: 20px;
 }
 
+.menu{
+    width: 100%;
+    background-color: #ffffffb0;
+    position: absolute;
+    height: 100vh;
+    top: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    transform: scale(0);
+    transition: all 0.3s ease;
+    
+}
 
+.menu ul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 
+}
+.menu a{
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    background-color: #316ff6;
+}
+.menu a:hover{
+    background-color: #009087;
+    color: #111;
+}
 /* Footer */
 /* From Uiverse.io by javierBarroso */ 
 footer{
