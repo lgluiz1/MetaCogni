@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Link WhatsApp Gerado{% endblock %}
+
+{% block content %}
+<div class="link_sucesso">
+    <div class="conteinerlink">
+    <h1>Seu link do WhatsApp foi gerado!</h1>
+    <p>Clique no link abaixo para abrir o WhatsApp:</p>
+    <div class="link_whatsapp">
+        <a class="link_numero" href="{{ link_whatsapp }}" target="_blank">{{ link_whatsapp }}</a>
+    </div>
+    <div class="copiar_link">
+        <a class="button_copiar-link" href="#" onclick="copiarLink()"> 
+            <span class="material-symbols-outlined">content_copy</span>Copiar Link
+        </a>
+        <a class="button_gera_novo" href="/">
+            <span class="material-symbols-outlined">restart_alt</span> Gera Novo Link
+        </a>
+    </div>
+    <div class="qrcodegerador">
+        <h1>Parabens você utilizou email</h1>
+        <p>Por Voce ter utilizado o email iremos disponibilizar o qrcode do link do WhatsApp.</p>
+        <p>Esse Qr Code gerado pode ser utilizado para imprimir e coloca em seu estabelecimento ou ate mesmo ser utilizado em anuncios do seu negocio para os cliente ler com a tela do celular.</p>
+        <p>Se tiver alguma duvida entre em contato conosco.</p>
+        
+        <button class="button_gera_qrcode" ><span class="material-symbols-outlined">
+            qr_code_scanner
+            </span> Click Aqui para gera seu QR Code</button>
+        
+    </div>
+        </div>
+    <div class="qrcode">
+
+        <div class="qrcode_gerado">
+            <div class="qrcode_img">
+            <img src="./static/img/arquivos_temporarios/{{telefone}}.png" alt="QR Code do link do WhatsApp">
+            </div>
+            <p>QR Code do link do WhatsApp</p>
+            <span class="time_qrcode">Tempo para baixar o QR Code <span id="countdown">02:00</span> minutos</span>
+            <a href="./static/img/arquivos_temporarios/{{telefone}}.png" download class="link_imagem">Baixar QR Code</a>
+            
+                
+            </div>
+        </div>
+</div>
+
+<script>
+    // temporizador para o qrcode atualiza na pagina
+    const countdownElement = document.getElementById('countdown');
+const mensagemDownload = document.querySelector('.time_qrcode');
+const paginaLink = document.querySelector('.conteinerlink');
+const paginaQrcod = document.querySelector('.qrcode');
+const buttonGeraQr = document.querySelector('.button_gera_qrcode');
+const linkQrCode = document.querySelector('.link_imagem');
+let countdown = 120;
+let countdownInterval;
+
+buttonGeraQr.addEventListener('click', () => {
+    // Pega o número de telefone de um input ou variável dinâmica e remove formatação
+    
+    const urlNumero = document.querySelector('.link_numero').href;
+    // Usando URLSearchParams para obter os parâmetros da URL
+    const params = new URLSearchParams(urlNumero.split('?')[1]);
+    // Pegando o número de telefone e removendo os primeiros dois dígitos (55)
+    let numeroTelefone = params.get('phone');
+    if (numeroTelefone.startsWith('55')) {
+        numeroTelefone = numeroTelefone.slice(2);
+    }
+    numero_completo = numeroTelefone
+
+
+    // Envia uma requisição para o backend iniciar a contagem
+    fetch('/start_timer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `numero_completo=${numero_completo}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.status);  // Exibe a mensagem de status
+
+        // Inicia a contagem regressiva no frontend
+        paginaLink.style.display = 'none';
+        paginaQrcod.style.transform = "scale(1)";
+        countdown = 120;
+        if (countdownInterval) clearInterval(countdownInterval);  // Limpa qualquer intervalo existente
+
+        countdownInterval = setInterval(() => {
+            countdown--;
+            const minutes = Math.floor(countdown / 60);
+            const seconds = countdown % 60;
+            countdownElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (countdown <= 0) {
+                countdownElement.textContent = '00:00';
+                mensagemDownload.innerHTML = 'Download Indisponível tempo expirado';
+                mensagemDownload.style.color = 'red';
+                linkQrCode.innerHTML = 'Link indisponível';
+                linkQrCode.href = '#';
+                linkQrCode.style.pointerEvents = 'none';
+                linkQrCode.style.cursor = 'not-allowed';
+                linkQrCode.style.opacity = '0.5';
+                paginaQrcod.style.transform = "scale(0)";
+                paginaQrcod.remove();
+                paginaLink.style.display = 'block';
+                clearInterval(countdownInterval);  // Limpa o intervalo quando a contagem chega a zero
+            }
+        }, 1000);
+    })
+    .catch(error => {
+        console.error('Erro ao iniciar a contagem:', error);
+    });
+});
+
+
+    
+
+// Função para copiar o link do WhatsApp para a área de transferência
+function copiarLink() {
+    // Seleciona o link do WhatsApp
+    const link = document.querySelector('.link_whatsapp a').href;
+    
+    // Cria um campo de texto temporário para armazenar o link
+    const tempInput = document.createElement('input');
+    tempInput.value = link; // Define o valor do campo temporário como o link
+    document.body.appendChild(tempInput); // Adiciona o campo temporário ao corpo do documento
+    
+    // Seleciona o conteúdo do campo de texto e copia para a área de transferência
+    tempInput.select();
+    document.execCommand('copy');
+    
+    // Remove o campo de texto temporário após a cópia
+    document.body.removeChild(tempInput);
+    
+    // Alerta o usuário de que o link foi copiado
+    alert("Link copiado para a área de transferência!");
+}
+  
+// Adiciona um evento ao botão de copiar para que, ao clicar, o link seja copiado
+document.querySelector('.button_copiar-link').addEventListener('click', function(event) {
+    event.preventDefault();  // Previne o comportamento padrão do link, que é recarregar a página
+    copiarLink();  // Chama a função de copiar o link
+});
+</script>
+{% endblock %}
